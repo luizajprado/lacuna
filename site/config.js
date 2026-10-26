@@ -1,7 +1,4 @@
 // Configuração do site Lacuna.
-// Quando o endpoint real da coleta estiver publicado (Google Apps Script),
-// descomente a linha abaixo e cole a URL que termina em /exec:
-//
-// window.LACUNA_ENDPOINT = "https://script.google.com/macros/s/XXXXXXXX/exec";
-//
-// Sem endpoint, os testemunhos ficam apenas no navegador de quem envia (anônimo).
+// Endpoint real da coleta (Google Apps Script → planilha "Lacuna coleta").
+// Os testemunhos enviados pelo site caem nessa planilha e o TouchDesigner lê os números dela.
+window.LACUNA_ENDPOINT = "https://script.google.com/macros/s/AKfycbwRvasHf1xsbojfp2de834rpxXQDMBbeVu68Hm833rqP7ys0oAI0MfQTWKaeDydDAkaJA/exec";
