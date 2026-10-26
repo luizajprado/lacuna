@@ -33,8 +33,26 @@ function doPost(e) {
   }
 }
 
+/**
+ * O TouchDesigner chama isto (GET) a cada poucos segundos e recebe os números
+ * já agregados: contagem por camada, total e o nível de colapso (venus).
+ */
 function doGet() {
-  return json({ ok: true, servico: 'lacuna-coleta' });
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(ABA);
+  var agg = { ok: true, total: 0, hist: 0, antr: 0, soc: 0, venus: 0 };
+  if (sh && sh.getLastRow() > 1) {
+    var camadas = sh.getRange(2, 2, sh.getLastRow() - 1, 1).getValues(); // coluna "camada"
+    camadas.forEach(function (r) {
+      var c = (r[0] || '').toString();
+      if (agg[c] !== undefined) { agg[c]++; agg.total++; }
+    });
+    var mx = Math.max(agg.hist, agg.antr, agg.soc);
+    var mn = Math.min(agg.hist, agg.antr, agg.soc);
+    // colapso na Venus = o quanto a distribuição entre camadas é desigual (essencialização)
+    agg.venus = agg.total < 5 ? 0 : Math.max(0, (mx - mn) / (mx + 1));
+  }
+  return json(agg);
 }
 
 function criarAba(ss) {
