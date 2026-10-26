@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lacuna — testemunho de coleta",
+  "description": "Um fragmento de contexto, anônimo, que alimenta a vítima-ideal. Nunca contém nomes, endereços ou documentos.",
+  "type": "object",
+  "required": ["ts", "contexto", "camada"],
+  "properties": {
+    "ts": { "type": "string", "format": "date-time", "description": "quando foi coletado (ISO 8601)" },
+    "contexto": { "type": "string", "description": "o relato anônimo, nas palavras da pessoa" },
+    "origem": { "type": "string", "description": "por onde veio a abordagem (opcional)" },
+    "camada": { "type": "string", "enum": ["hist", "antr", "soc"], "description": "camada que o algoritmo atribuiu: histórica, antropológica ou social" },
+    "anexo": { "type": ["string", "null"], "description": "nome do print/e-mail anexado, se houver" }
+  },
+  "additionalProperties": false
+}

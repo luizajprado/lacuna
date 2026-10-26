@@ -1,0 +1,14 @@
+# segredos — nunca commitar a chave da API
+apikey
+apikey.txt
+*.key
+.env
+.env.*
+
+# TouchDesigner
+*.toe.autosave
+Backup/
+
+# sistema
+.DS_Store
+Thumbs.db
