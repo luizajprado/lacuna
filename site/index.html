@@ -155,6 +155,7 @@ footer{margin-top:50px;font-size:11px;color:var(--dim);line-height:1.6}
   </footer>
 </div>
 
+<script src="config.js"></script>
 <script>
 (function(){
 const CAM=[
@@ -222,9 +223,11 @@ const KW={
  soc:['perifer','renda','pobre','trabalho','emprego','model','filh','mãe','sozinh','document','dívida','viag','passagem','fronteira','europa','exterior','interior','desempreg']};
 function classifica(t){t=(t||'').toLowerCase();let best='soc',bc=0;
  for(const k in KW){let c=0;KW[k].forEach(w=>{if(t.indexOf(w)>=0)c++});if(c>bc){bc=c;best=k}}return best}
-// endpoint real opcional: defina window.LACUNA_ENDPOINT = "https://..." para enviar de verdade
+// endpoint real opcional: defina window.LACUNA_ENDPOINT em config.js para enviar de verdade.
+// Envia como text/plain (sem preflight CORS) em modo no-cors — o dado chega na planilha;
+// a resposta é opaca, então consideramos enviado se não lançar erro.
 function enviaReal(payload){const url=window.LACUNA_ENDPOINT;if(!url)return Promise.resolve(false);
- return fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).then(r=>r.ok).catch(()=>false)}
+ return fetch(url,{method:'POST',mode:'no-cors',headers:{'content-type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).then(()=>true).catch(()=>false)}
 function guardaLocal(payload){try{const k='lacuna_testemunhos';const a=JSON.parse(localStorage.getItem(k)||'[]');a.push(payload);localStorage.setItem(k,JSON.stringify(a.slice(-200)))}catch(e){}}
 const pvEl=document.getElementById('pv');let shotName='';
 document.getElementById('shot').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f){pvEl.classList.remove('on');shotName='';return}

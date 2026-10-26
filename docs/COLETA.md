@@ -10,12 +10,15 @@ Isso já basta para instalação/demonstração. Para acumular testemunhos de v�
 lugar só, ligue um backend.
 
 ## Ligando um backend real (quando quiser)
-O site envia cada testemunho como JSON se existir `window.LACUNA_ENDPOINT`. É só criar um endpoint
-que receba `POST` com o corpo abaixo e definir a URL (ex.: num `<script>` antes do fim do `index.html`):
+O caminho pronto é o **Google Apps Script** em `backend/apps-script/Codigo.gs` — ele grava os
+testemunhos numa planilha sua. Siga o passo a passo no topo daquele arquivo; ao final você copia a
+URL que termina em `/exec` e cola em `site/config.js`:
 
-```html
-<script>window.LACUNA_ENDPOINT = "https://SEU-ENDPOINT/coleta";</script>
+```js
+window.LACUNA_ENDPOINT = "https://script.google.com/macros/s/XXXX/exec";
 ```
+
+O site então envia cada testemunho como `POST` (text/plain, sem preflight CORS) com o corpo abaixo.
 
 Corpo enviado:
 ```json
